@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "439823597494",
+    "firebase_url": "https://safezone-8c922.firebaseio.com",
+    "project_id": "safezone-8c922",
+    "storage_bucket": "safezone-8c922.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439823597494:android:73b4c30dc26d9b4f258b17",
+        "android_client_info": {
+          "package_name": "com.arabic.quotes.safezone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439823597494-5b60jqumgmgmji3rjkh7ncrqpn8uiolo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arabic.quotes.safezone",
+            "certificate_hash": "ea4defab59f82879fd58de69fce7a3fc3e156ad7"
+          }
+        },
+        {
+          "client_id": "439823597494-d8gd4eaerohb7bgvj6p0oqaj9nq2a8ou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBepwOSat5no_jh3IM5iS7HrscaNzOq6Lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439823597494-d8gd4eaerohb7bgvj6p0oqaj9nq2a8ou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
