@@ -1,21 +1,16 @@
 package com.arabic.quotes.safezone;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.Image;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -23,10 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.arabic.quotes.safezone.App.CHANNEL_1_ID;
@@ -40,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     ImageView imageView;
     private NotificationManagerCompat notificationManager;
-
     private MediaSessionCompat mediaSession;
 
 
@@ -57,19 +53,22 @@ public class MainActivity extends AppCompatActivity {
         button1 = findViewById(R.id.btnaction2);
         textView = findViewById(R.id.txt);
         imageView = findViewById(R.id.safeimage);
-        reff = FirebaseDatabase.getInstance().getReference().child("sensor");
-        reff.addValueEventListener(new ValueEventListener() {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reff = firebaseDatabase.getReference();
+        reff.child("ultrasonic").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String number = dataSnapshot.child("laser").getValue().toString();
+                String number = dataSnapshot.getValue().toString();
+
                 if (number.equals("0")){
-                    textView.setText("Your building Safe and Secure ");
+                    textView.setText("You Are Safe And Secure");
                     textView.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_security_black_24dp,0);
                     sendonChannel2();
 
                 }else {
                     button.setVisibility(View.VISIBLE);
-                    textView.setText("Your base is under Attack ");
+                    textView.setText("You Are Under Attack");
                     textView.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_sentiment_very_dissatisfied_black_24dp,0);
                     sendonChannel1();
 
@@ -78,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this , "fail" , Toast.LENGTH_LONG).show();
+
             }
         });
+
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent contentIntent2 = PendingIntent.getActivity(this ,
                 0 , activityIntent2 , 0);
 
-        Bitmap artWork = BitmapFactory.decodeResource(getResources() , R.drawable.safe);
+        Bitmap artWork = BitmapFactory.decodeResource(getResources() , R.drawable.safezonelogo);
 
         Notification notification = new NotificationCompat.Builder(this , CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_sentiment_very_dissatisfied_black_24dp)
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 .addAction(R.drawable.ic_call_black_24dp , "" , contentIntent1)
                 .addAction(R.drawable.ic_videocam_black_24dp , "" , contentIntent2)
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView()
                 .setMediaSession(mediaSession.getSessionToken()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)

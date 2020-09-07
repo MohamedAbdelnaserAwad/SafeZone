@@ -11,27 +11,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Call extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
-    Button call;
+    ImageView call;
     TextView textNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
 
-        call = findViewById(R.id.btncall);
+        call = findViewById(R.id.imageView3);
 
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textNumber = findViewById(R.id.txtnumber);
-                String number = (String) textNumber.getText();
-                makephoneCall(number);
+
+                makephoneCall("123456");
             }
         });
     }
